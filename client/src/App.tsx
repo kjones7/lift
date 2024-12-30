@@ -1,14 +1,23 @@
+
 import { Switch, Route } from "wouter";
 import { Home } from "./pages/Home";
+import { History } from "./pages/History";
+import { Exercises } from "./pages/Exercises";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
+import { NavigationFooter } from "./components/NavigationFooter";
 
 function App() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/history" component={History} />
+        <Route path="/exercises" component={Exercises} />
+        <Route component={NotFound} />
+      </Switch>
+      <NavigationFooter />
+    </>
   );
 }
 
