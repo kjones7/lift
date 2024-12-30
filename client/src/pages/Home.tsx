@@ -5,7 +5,11 @@ import { Loader2 } from "lucide-react";
 import type { Workout } from "../types/workout";
 
 export function Home() {
-  const { data: workouts, isLoading, error } = useQuery<Workout[]>({
+  const {
+    data: workouts,
+    isLoading,
+    error,
+  } = useQuery<Workout[]>({
     queryKey: ["/api/workouts"],
   });
 
@@ -27,10 +31,15 @@ export function Home() {
     );
   }
 
+  /**
+   * Home page.
+   *
+   * - pb-20 must be used so that the footer does not cover the content.
+   */
   return (
     <div className="container mx-auto p-4 pb-20">
       <h1 className="text-2xl font-bold mb-6">My Workouts</h1>
-      
+
       {workouts?.length === 0 ? (
         <Card>
           <CardContent className="p-6">
