@@ -1,5 +1,9 @@
 import { Exercise } from "../types/exercise";
 
+// Find exercise by ID
+export const findExercise = (id: string) =>
+  exercises.find((ex) => ex.id === id);
+
 /**
  * The exercises available in the app.
  */
