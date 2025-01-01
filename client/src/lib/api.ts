@@ -1,5 +1,3 @@
-import type { Workout } from "../types/workout";
-
 const BASE_URL = '/api';
 
 export async function fetchWorkouts() {
@@ -10,17 +8,17 @@ export async function fetchWorkouts() {
   return response.json();
 }
 
-export async function createWorkout(workout: Omit<Workout, 'id' | 'createdAt'>) {
-  const response = await fetch(`${BASE_URL}/workouts`, {
+export async function startWorkout(templateId: string) {
+  const response = await fetch(`${BASE_URL}/workouts/start`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(workout),
+    body: JSON.stringify({ templateId }),
   });
 
   if (!response.ok) {
-    throw new Error('Failed to create workout');
+    throw new Error('Failed to start workout');
   }
   return response.json();
 }

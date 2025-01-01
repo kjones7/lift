@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { workoutTemplates } from "@/data/templates.ts";
 import { findExercise } from "@/data/exercises.ts";
+import { startWorkout } from "@/lib/api.ts";
 
 export function Home() {
   /**
@@ -23,7 +24,18 @@ export function Home() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {workoutTemplates?.map((workoutTemplate) => (
-            <Card key={workoutTemplate.id}>
+            <Card
+              key={workoutTemplate.id}
+              className="hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={async () => {
+                try {
+                  const resp = await startWorkout(workoutTemplate.id);
+                  console.log(resp);
+                } catch (error) {
+                  console.error("Failed to start workout:", error);
+                }
+              }}
+            >
               <CardHeader>
                 <CardTitle>{workoutTemplate.name}</CardTitle>
               </CardHeader>
@@ -31,10 +43,10 @@ export function Home() {
                 <p className="text-sm text-muted-foreground">
                   {workoutTemplate.exercises
                     ?.map((exercise) => {
-                      const fullExercise = findExercise(exercise.exerciseId);
-                      return fullExercise?.name || 'Exercise not found';
+                      const fullExercise = findExercise(exercise.id);
+                      return fullExercise?.name || "Exercise not found";
                     })
-                    .join(', ') || 'No exercises available'}
+                    .join(", ") || "No exercises available"}
                 </p>
               </CardContent>
             </Card>
