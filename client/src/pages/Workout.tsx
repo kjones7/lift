@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRoute } from "wouter";
 import type { Workout as WorkoutType } from "@/types/workout";
+import { findExercise } from "@/data/exercises";
 
 export function Workout() {
   const [, params] = useRoute("/workouts/:id");
@@ -60,7 +61,7 @@ export function Workout() {
         {workout.exercises.map((exercise, index) => (
           <div key={index} className="p-4 border rounded-lg">
             <h2 className="text-xl font-semibold">
-              {exercise.name || "Exercise"}
+              {findExercise(exercise.id)?.name || "Exercise"}
             </h2>
           </div>
         ))}

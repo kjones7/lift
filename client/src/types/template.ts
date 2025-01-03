@@ -1,7 +1,7 @@
-import { Exercise } from "./exercise";
+import { ExerciseReference } from "./exercise";
 
 export interface WorkoutTemplate {
   id: string;
   name: string;
-  exercises: Exercise[];
+  exercises: ExerciseReference[];
 }

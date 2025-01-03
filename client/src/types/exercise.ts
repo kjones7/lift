@@ -20,3 +20,7 @@ export interface Exercise {
   bodyPart: BodyPart;
   category: Category;
 }
+
+export interface ExerciseReference {
+  id: string;
+}

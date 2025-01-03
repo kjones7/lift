@@ -12,13 +12,13 @@ export const workoutTemplates: WorkoutTemplate[] = [
     name: "Day 1 (OH Press)",
     exercises: [
       {
-        exerciseId: findExercise("1")?.id ?? "", // Seated Overhead Press
+        id: findExercise("1")?.id ?? "", // Seated Overhead Press
       },
       {
-        exerciseId: findExercise("2")?.id ?? "", // Bicep Curl
+        id: findExercise("2")?.id ?? "", // Bicep Curl
       },
       {
-        exerciseId: findExercise("3")?.id ?? "", // Plank
+        id: findExercise("3")?.id ?? "", // Plank
       },
     ],
   },
@@ -27,16 +27,16 @@ export const workoutTemplates: WorkoutTemplate[] = [
     name: "Day 2 (Squat)",
     exercises: [
       {
-        exerciseId: findExercise("4")?.id ?? "", // Front Squat
+        id: findExercise("4")?.id ?? "", // Front Squat
       },
       {
-        exerciseId: findExercise("5")?.id ?? "", // Lunge
+        id: findExercise("5")?.id ?? "", // Lunge
       },
       {
-        exerciseId: findExercise("6")?.id ?? "", // Shrug
+        id: findExercise("6")?.id ?? "", // Shrug
       },
       {
-        exerciseId: findExercise("7")?.id ?? "", // Ab Wheel
+        id: findExercise("7")?.id ?? "", // Ab Wheel
       },
     ],
   },
@@ -45,13 +45,13 @@ export const workoutTemplates: WorkoutTemplate[] = [
     name: "Day 3 (Bench)",
     exercises: [
       {
-        exerciseId: findExercise("8")?.id ?? "", // Bench Press
+        id: findExercise("8")?.id ?? "", // Bench Press
       },
       {
-        exerciseId: findExercise("9")?.id ?? "", // Bent Over One Arm Row
+        id: findExercise("9")?.id ?? "", // Bent Over One Arm Row
       },
       {
-        exerciseId: findExercise("10")?.id ?? "", // Decline Crunch
+        id: findExercise("10")?.id ?? "", // Decline Crunch
       },
     ],
   },
@@ -60,16 +60,16 @@ export const workoutTemplates: WorkoutTemplate[] = [
     name: "Day 4 (Deadlift)",
     exercises: [
       {
-        exerciseId: findExercise("11")?.id ?? "", // Deadlift
+        id: findExercise("11")?.id ?? "", // Deadlift
       },
       {
-        exerciseId: findExercise("14")?.id ?? "", // Stiff Leg Deadlift
+        id: findExercise("14")?.id ?? "", // Stiff Leg Deadlift
       },
       {
-        exerciseId: findExercise("12")?.id ?? "", // Triceps Extension
+        id: findExercise("12")?.id ?? "", // Triceps Extension
       },
       {
-        exerciseId: findExercise("13")?.id ?? "", // Hanging Leg Raise
+        id: findExercise("13")?.id ?? "", // Hanging Leg Raise
       },
     ],
   },
