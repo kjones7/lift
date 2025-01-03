@@ -1,4 +1,3 @@
-
 import { Switch, Route } from "wouter";
 import { Home } from "./pages/Home";
 import { History } from "./pages/History";
@@ -6,6 +5,7 @@ import { Exercises } from "./pages/Exercises";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
 import { NavigationFooter } from "./components/NavigationFooter";
+import { Workout } from "./pages/Workout";
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
         <Route path="/" component={Home} />
         <Route path="/history" component={History} />
         <Route path="/exercises" component={Exercises} />
+        <Route path="/workouts/:id" component={Workout} />
         <Route component={NotFound} />
       </Switch>
       <NavigationFooter />
@@ -28,7 +29,9 @@ function NotFound() {
         <CardContent className="pt-6">
           <div className="flex mb-4 gap-2">
             <AlertCircle className="h-8 w-8 text-red-500" />
-            <h1 className="text-2xl font-bold text-gray-900">404 Page Not Found</h1>
+            <h1 className="text-2xl font-bold text-gray-900">
+              404 Page Not Found
+            </h1>
           </div>
           <p className="mt-4 text-sm text-gray-600">
             The page you're looking for doesn't exist.

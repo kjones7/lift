@@ -8,6 +8,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   await initDb();
   const db = getDb();
 
+  app.get("/api/workouts/:id", async (req, res) => {
+    const { id } = req.params;
+    const workout = db.data?.workouts.find((w) => w.id === id);
+
+    if (!workout) {
+      return res.status(404).json({ error: "Workout not found" });
+    }
+
+    res.json(workout);
+  });
+
   app.post("/api/workouts/start", async (req, res) => {
     const { templateId } = req.body;
 

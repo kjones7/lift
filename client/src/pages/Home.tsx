@@ -2,8 +2,10 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { workoutTemplates } from "@/data/templates.ts";
 import { findExercise } from "@/data/exercises.ts";
 import { startWorkout } from "@/lib/api.ts";
+import { useLocation } from "wouter";
 
 export function Home() {
+  const [, setLocation] = useLocation();
   /**
    * Home page.
    *
@@ -30,7 +32,7 @@ export function Home() {
               onClick={async () => {
                 try {
                   const resp = await startWorkout(workoutTemplate.id);
-                  console.log(resp);
+                  setLocation(`/workouts/${resp.id}`);
                 } catch (error) {
                   console.error("Failed to start workout:", error);
                 }
