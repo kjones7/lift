@@ -9,7 +9,7 @@ export async function fetchWorkouts() {
 }
 
 export async function startWorkout(templateId: string) {
-  const response = await fetch(`${BASE_URL}/workouts/start`, {
+  const response = await fetch(`${BASE_URL}/workouts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

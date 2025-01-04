@@ -19,7 +19,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     return res.json(workout);
   });
 
-  app.post("/api/workouts/start", async (req, res) => {
+  app.post("/api/workouts", async (req, res) => {
     const { templateId } = req.body;
 
     // Check if there's already an active workout
