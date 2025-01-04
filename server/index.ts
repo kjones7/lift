@@ -60,7 +60,7 @@ app.use((req, res, next) => {
       log(`serving on port ${PORT}`);
     });
   } catch (error) {
-    console.error('Failed to start server:', error);
+    console.error("Failed to start server:", error);
     process.exit(1);
   }
 })();
