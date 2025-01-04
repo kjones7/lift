@@ -16,7 +16,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(404).json({ error: "Workout not found" });
     }
 
-    res.json(workout);
+    return res.json(workout);
   });
 
   app.post("/api/workouts/start", async (req, res) => {
@@ -47,7 +47,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     db.data?.workouts.push(newWorkout);
     await db.write();
 
-    res.status(201).json(newWorkout);
+    return res.status(201).json(newWorkout);
   });
 
   const httpServer = createServer(app);

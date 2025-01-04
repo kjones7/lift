@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import checker from "vite-plugin-checker";
 import react from "@vitejs/plugin-react";
 import themePlugin from "@replit/vite-plugin-shadcn-theme-json";
 import path, { dirname } from "path";
@@ -8,7 +9,12 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 export default defineConfig({
-  plugins: [react(), runtimeErrorOverlay(), themePlugin()],
+  plugins: [
+    react(),
+    runtimeErrorOverlay(),
+    themePlugin(),
+    checker({ typescript: true }),
+  ],
   resolve: {
     alias: {
       "@db": path.resolve(__dirname, "db"),

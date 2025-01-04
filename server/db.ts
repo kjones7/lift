@@ -9,7 +9,7 @@ interface DbSchema {
 
 // Default data
 const defaultData: DbSchema = {
-  workouts: []
+  workouts: [],
 };
 
 let db: Low<DbSchema>;
@@ -18,7 +18,7 @@ let db: Low<DbSchema>;
 export async function initDb() {
   const file = join(process.cwd(), "db.json");
   const adapter = new JSONFile<DbSchema>(file);
-  db = new Low<DbSchema>(adapter, defaultData);
+  db = new Low<DbSchema>(adapter);
 
   await db.read();
   db.data ||= defaultData;
