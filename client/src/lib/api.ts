@@ -22,3 +22,23 @@ export async function startWorkout(templateId: string) {
   }
   return response.json();
 }
+
+export async function getActiveWorkout() {
+  const response = await fetch(`${BASE_URL}/workouts/active`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status === 204) {
+    // No active workout
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error("Failed to get active workout");
+  }
+
+  return response.json();
+}

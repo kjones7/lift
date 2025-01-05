@@ -8,6 +8,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
   await initDb();
   const db = getDb();
 
+  app.get("/api/workouts/active", async (_req, res) => {
+    try {
+      // Check if database is initialized
+      if (!db.data) {
+        return res.status(500).json({
+          error: "Database not initialized",
+        });
+      }
+
+      // If there's no active workout, return 204 No Content
+      if (!db.data.activeWorkout) {
+        return res.status(204).end();
+      }
+
+      const workout = db.data.workouts.find(
+        (w) => w.id === db.data?.activeWorkout,
+      );
+
+      // This would indicate a data integrity issue - we have an activeWorkout ID
+      // but no matching workout in the workouts array
+      if (!workout) {
+        return res.status(500).json({
+          error: "Active workout reference exists but workout not found",
+          workoutId: db.data.activeWorkout,
+        });
+      }
+
+      return res.json(workout);
+    } catch (error) {
+      console.error("Error fetching active workout:", error);
+      return res.status(500).json({
+        error: "Internal server error while fetching active workout",
+      });
+    }
+  });
+
   app.get("/api/workouts/:id", async (req, res) => {
     const { id } = req.params;
     const workout = db.data?.workouts.find((w) => w.id === id);
@@ -44,11 +80,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       datetimeCompleted: undefined,
     };
 
-    if (!db.data) return res.status(500).json({ error: "Database not initialized" });
-    
+    if (!db.data)
+      return res.status(500).json({ error: "Database not initialized" });
+
     db.data.workouts.push(newWorkout);
     db.data.activeWorkout = newWorkout.id;
-    
+
     await db.write();
 
     return res.status(201).json(newWorkout);

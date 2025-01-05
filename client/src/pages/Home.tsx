@@ -1,11 +1,43 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { workoutTemplates } from "@/data/templates.ts";
 import { findExercise } from "@/data/exercises.ts";
-import { startWorkout } from "@/lib/api.ts";
+import { startWorkout, getActiveWorkout } from "@/lib/api.ts";
 import { useLocation } from "wouter";
+import { WorkoutTemplate } from "@/types/template";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useState } from "react";
 
 export function Home() {
   const [, setLocation] = useLocation();
+  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<WorkoutTemplate | null>(null);
+
+  const handleSelectTemplate = async (workoutTemplate: WorkoutTemplate) => {
+    setSelectedTemplate(workoutTemplate);
+    try {
+      const resp = await getActiveWorkout();
+      if (resp?.id) {
+        setIsAlertDialogOpen(true);
+      } else {
+        // No active workout, start new one directly
+        const newWorkout = await startWorkout(workoutTemplate.id);
+        setLocation(`/workouts/${newWorkout.id}`);
+      }
+    } catch (error) {
+      console.error("Failed to check active workout:", error);
+    }
+  };
+
   /**
    * Home page.
    *
@@ -29,14 +61,7 @@ export function Home() {
             <Card
               key={workoutTemplate.id}
               className="hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={async () => {
-                try {
-                  const resp = await startWorkout(workoutTemplate.id);
-                  setLocation(`/workouts/${resp.id}`);
-                } catch (error) {
-                  console.error("Failed to start workout:", error);
-                }
-              }}
+              onClick={() => handleSelectTemplate(workoutTemplate)}
             >
               <CardHeader>
                 <CardTitle>{workoutTemplate.name}</CardTitle>
@@ -55,6 +80,43 @@ export function Home() {
           ))}
         </div>
       )}
+
+      <AlertDialog open={isAlertDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Start New Workout?</AlertDialogTitle>
+            <AlertDialogDescription>
+              You already have an active workout. Are you sure you want to stop
+              it and start a new one?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                setIsAlertDialogOpen(false);
+                setSelectedTemplate(null);
+              }}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={async () => {
+                try {
+                  // Replace with actual API call to stop current workout if needed
+                  if (!selectedTemplate) return;
+                  const resp = await startWorkout(selectedTemplate.id);
+                  setLocation(`/workouts/${resp.id}`);
+                  setIsAlertDialogOpen(false);
+                } catch (error) {
+                  console.error("Failed to start workout:", error);
+                }
+              }}
+            >
+              Start Workout
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
