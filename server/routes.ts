@@ -44,7 +44,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       datetimeCompleted: undefined,
     };
 
-    db.data?.workouts.push(newWorkout);
+    if (!db.data) return res.status(500).json({ error: "Database not initialized" });
+    
+    db.data.workouts.push(newWorkout);
+    db.data.activeWorkout = newWorkout.id;
+    
     await db.write();
 
     return res.status(201).json(newWorkout);

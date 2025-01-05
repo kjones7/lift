@@ -4,6 +4,7 @@ import { JSONFile } from "lowdb/node";
 import type { Workout } from "../client/src/types/workout";
 
 interface DbSchema {
+  activeWorkout?: string;
   workouts: Workout[];
 }
 
