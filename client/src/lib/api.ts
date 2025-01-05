@@ -1,3 +1,5 @@
+import { Workout } from "@/types/workout";
+
 const BASE_URL = "/api";
 
 export async function fetchWorkouts() {
@@ -23,7 +25,7 @@ export async function startWorkout(templateId: string) {
   return response.json();
 }
 
-export async function getActiveWorkout() {
+export async function getActiveWorkout(): Promise<Workout | null> {
   const response = await fetch(`${BASE_URL}/workouts/active`, {
     method: "GET",
     headers: {
@@ -40,5 +42,5 @@ export async function getActiveWorkout() {
     throw new Error("Failed to get active workout");
   }
 
-  return response.json();
+  return response.json() as Promise<Workout>;
 }
